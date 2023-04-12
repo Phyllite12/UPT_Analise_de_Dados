@@ -76,5 +76,4 @@ df1['Distance(M)'] = (df['Distance(mi)'] * 1609.34)
 print(df1)
 print(df1['Temperature(F)'])
 print(df1['Temperature(C)'])
-print(df['Distance(mi)'])
 
