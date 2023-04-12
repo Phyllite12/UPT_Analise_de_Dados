@@ -38,10 +38,7 @@ plt.show()
 #sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(F)', 'Visibility(mi)']])
 #plt.show()
 
-#mapa de acidentes pela longitude e latitude
-sample_df = df.sample(int(0.1 * len(df)))
-sns.scatterplot(data=sample_df, x='Start_Lng', y='Start_Lat',size=0.001)
-plt.show()
+
 
 #HISTOGRAMA E CONTAGEM DO NºACIDENTES POR MÊS
 new_df['Start_Time'] = pd.to_datetime(df['Start_Time']) # converte a coluna de data em um objeto de série de data
