@@ -42,7 +42,6 @@ print(new_df['Month'].value_counts()) #Contagem do nºde acidentes por mês
 #plt.show()
 
 
-
 #BOXPLOTS------------------------------
 #SEVERIDADE
 # cria um boxplot da coluna "Severity"
@@ -51,6 +50,8 @@ plt.boxplot(new_df['Severity'])
 # adiciona títulos e rótulos aos eixos
 plt.title('Distribuição da Severidade dos Acidentes')
 plt.ylabel('Severidade')
+plt.xlim(0.5, 1.5) # não há necessidade de delimitar o eixo x neste caso
+plt.ylim(1, 4)
 
 # exibe o boxplot
 plt.show()
@@ -73,6 +74,11 @@ plt.boxplot(df['Temperature(F)'])
 # adiciona títulos e rótulos aos eixos
 plt.title('Distribuição da Temperatura no Momento dos Acidentes')
 plt.ylabel('Temperatura (F)')
+plt.xlim(0.5, 1.5) # não há necessidade de delimitar o eixo x neste caso
+plt.ylim(-50, 150)
+
 
 # exibe o boxplot
 plt.show()
+
+
