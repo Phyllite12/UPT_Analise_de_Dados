@@ -35,6 +35,7 @@ print(corr_coef)
 sns.distplot(df['Severity'], kde=False, bins=10)
 plt.show()
 
+#cria grafico de dispersão entre a severidade e a temperatura em fahrenheit
 #sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(F)', 'Visibility(mi)']])
 #plt.show()
 
@@ -50,7 +51,6 @@ plt.hist(new_df['Month'], bins=12)
 plt.title('Distribuição dos Acidentes de Carro ao Longo dos Meses')
 plt.xlabel('Mês')
 plt.ylabel('Número de Acidentes')
-
 # exibe o histograma
 plt.show()
 
@@ -63,8 +63,18 @@ df1['Traffic_Signal'] = df['Traffic_Signal'].map({'True': 1, 'False': 0})
 df['Start_Time'] = pd.to_datetime(df['Start_Time'])
 df['End_Time'] = pd.to_datetime(df['End_Time'])
 #calcular a diferenca entre o tempo de inicio e fim do acidente
-difTime = df['End_Time'] - df['Start_Time']
-df1['Acident_Duration'] = difTime
+df1['Acident_Duration'] = df['End_Time'] - df['Start_Time']
+
+
+#converter a temperatura de fahrenheit para celsius
+df1['Temperature(C)'] = (df['Temperature(F)'] - 32) * 5/9
+
+#converter a distancia de milhas para metros
+df1['Distance(M)'] = (df['Distance(mi)'] * 1609.34)
+
 
 print(df1)
-print(df1['Sunrise_Sunset'])
+print(df1['Temperature(F)'])
+print(df1['Temperature(C)'])
+print(df['Distance(mi)'])
+
