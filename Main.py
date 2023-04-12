@@ -35,13 +35,11 @@ corr_coef = np.corrcoef(humidity_severity['Humidity(%)'], humidity_severity['Sev
 sns.distplot(df['Severity'], kde=False, bins=10)
 plt.show()
 
+#cria grafico de dispersão entre a severidade e a temperatura em fahrenheit
 #sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(F)', 'Visibility(mi)']])
 #plt.show()
 
-#mapa de acidentes pela longitude e latitude
-sample_df = df.sample(int(0.1 * len(df)))
-sns.scatterplot(data=sample_df, x='Start_Lng', y='Start_Lat',size=0.001)
-plt.show()
+
 
 #HISTOGRAMA E CONTAGEM DO NºACIDENTES POR MÊS
 new_df['Start_Time'] = pd.to_datetime(df['Start_Time']) # converte a coluna de data em um objeto de série de data
@@ -50,9 +48,10 @@ print(new_df['Month'].value_counts()) #Contagem do nºde acidentes por mês
 #plt.hist(new_df['Month'], bins=12)
 
 #Adiciona títulos e rótulos aos eixos
-#plt.title('Distribuição dos Acidentes de Carro ao Longo dos Meses')
-#plt.xlabel('Mês')
-#plt.ylabel('Número de Acidentes')
+
+plt.title('Distribuição dos Acidentes de Carro ao Longo dos Meses')
+plt.xlabel('Mês')
+plt.ylabel('Número de Acidentes')
 
 # exibe o histograma
 #plt.show()
@@ -102,8 +101,17 @@ df1['Traffic_Signal'] = df['Traffic_Signal'].map({'True': 1, 'False': 0})
 df['Start_Time'] = pd.to_datetime(df['Start_Time'])
 df['End_Time'] = pd.to_datetime(df['End_Time'])
 #calcular a diferenca entre o tempo de inicio e fim do acidente
-difTime = df['End_Time'] - df['Start_Time']
-df1['Acident_Duration'] = difTime
+df1['Acident_Duration'] = df['End_Time'] - df['Start_Time']
+
+
+#converter a temperatura de fahrenheit para celsius
+df1['Temperature(C)'] = (df['Temperature(F)'] - 32) * 5/9
+
+#converter a distancia de milhas para metros
+df1['Distance(M)'] = (df['Distance(mi)'] * 1609.34)
+
 
 print(df1)
-print(df1['Sunrise_Sunset'])
+print(df1['Temperature(F)'])
+print(df1['Temperature(C)'])
+
