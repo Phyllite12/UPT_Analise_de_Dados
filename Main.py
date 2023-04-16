@@ -33,7 +33,6 @@ df1['Roundabout'] = df['Roundabout'].map({True: 1, False: 0})
 df1['Station'] = df['Station'].map({True: 1, False: 0})
 df1['Stop'] = df['Stop'].map({True: 1, False: 0})
 df1['Traffic_Calming'] = df['Traffic_Calming'].map({True: 1, False: 0})
-df1['Turning_Loop'] = df['Turning_Loop'].map({True: 1, False: 0})
 
 #converter os dados de tempo para datetime
 df['Start_Time'] = pd.to_datetime(df['Start_Time'])
@@ -53,16 +52,26 @@ def describe():
 def filtros():
     #Acidentes Por estado
     countsAciSta = df1["State"].value_counts().head(10)
+    print("Numero de acidentes por estado")
     print(countsAciSta)
+
+    print("")
 
     #Acidentes nas diferentes timezones
     timezone_counts = df1['Timezone'].value_counts()
+    print("Numero de acidentes por time zone")
     print(timezone_counts)
 
+    print("")
+
     severity_humidity = df1.groupby('Severity')['Humidity(%)'].mean()
+    print("Media de humidade para cada valor de severidade")
     print(severity_humidity)
 
+    print("")
+
     weather = df1['Weather_Condition'].value_counts().head(10)
+    print("Estados de tempo em que ocorrem mais acidentes")
     print(weather)
 
 def grafico_acidentes_estado():
