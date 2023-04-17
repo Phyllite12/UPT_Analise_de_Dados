@@ -59,7 +59,7 @@ def grafico_acidentes_timezone():
 
     plt.show()
 
-def grafico_nAcidentes_severidade():
+def grafico_Severidade_Humidade():
     severity_humidity = df1.groupby('Severity')['Humidity(%)'].mean()
     severity_humidity.plot(kind="bar")
     plt.title("Severidade Por media de Humidade")
@@ -93,8 +93,8 @@ def correlacoes():
     plt.show()
 
 def dispersao():
-    #cria grafico de dispersão entre a severidade,temperatura em Celcius, visibilidade e Humidade
-    sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(C)', 'Visibility(M)']])
+    #cria grafico de dispersão entre a severidade,temperatura, visibilidade e Humidade
+    sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(F)', 'Visibility(mi)']])
     plt.show()
 
 
