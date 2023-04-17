@@ -266,7 +266,7 @@ def transformacao_linearTemperatura():
 #correlacoes()
 #dispersao()
 #grafico_acidentes_timezone()
-#grafico_severidade_humidade()
+grafico_Severidade_Humidade()
 #garfico_Weather_Acidentes()
 #transformacao_linearTemperatura()
 
