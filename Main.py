@@ -1,10 +1,7 @@
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
-import numpy as np
-from datetime import datetime as dt
 from sklearn.preprocessing import MinMaxScaler
-
 
 df = pd.read_csv('US_Accidents_Dec21_updated.csv')
 new_df = df.fillna(0)
@@ -18,6 +15,9 @@ df1['Temperature(C)'] = (df['Temperature(F)'] - 32) * 5/9
 
 #converter a distancia de milhas para metros
 df1['Distance(M)'] = (df['Distance(mi)'] * 1609.34)
+
+#converter a visibilidade de milhas para metros
+df1['Visibility(M)'] = (df['Visibility(mi)'] * 1609.34)
 
 #transformar os dados categóricos em numéricos
 df1['Sunrise_Sunset'] = df['Sunrise_Sunset'].map({'Day': 1, 'Night': 0})
@@ -41,13 +41,13 @@ df['End_Time'] = pd.to_datetime(df['End_Time'])
 df1['Acident_Duration'] = (df['End_Time'] - df['Start_Time']).dt.total_seconds().astype(int)
 
 def describe():
-    # Ordena a severidade por quartis (25%, 50%(mediana), 75%)
-    describSever = df.describe()
-    print(describSever)
+    #Ordena a severidade por quartis (25%, 50%(mediana), 75%)
+    #describSever = df.describe()
+    #print(describSever)
 
-    print(df1.describe())
+    #print(df1.describe())
 
-    print(df1.size)
+    #print(df1.size)
 
 def grafico_acidentes_timezone():
     #Acidentes nas diferentes timezones
@@ -59,13 +59,13 @@ def grafico_acidentes_timezone():
 
     plt.show()
 
-def grafico_severidade_humidade():
+def grafico_nAcidentes_severidade():
     severity_humidity = df1.groupby('Severity')['Humidity(%)'].mean()
     severity_humidity.plot(kind="bar")
-    plt.title("Numero de acidentes por time zone")
-    plt.xlabel("Severity")
-    plt.ylabel("Humedade") 
-
+    plt.title("Numero de acidentes por severidade")
+    plt.xlabel("Severidade")
+    plt.ylabel("NºAcidentes")
+    severity_humidity.corr()
     plt.show()
 
 def garfico_Weather_Acidentes():
@@ -92,9 +92,9 @@ def correlacoes():
     sns.heatmap(df2.corr(), annot=True, cmap='coolwarm', fmt='.2f')
     plt.show()
 
-def dispersao_severidade_temperatura(): 
-    #cria grafico de dispersão entre a severidade e a temperatura em fahrenheit
-    sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(F)', 'Visibility(mi)']])
+def dispersao():
+    #cria grafico de dispersão entre a severidade,temperatura em Celcius, visibilidade e Humidade
+    sns.pairplot(df1[['Severity', 'Humidity(%)', 'Temperature(C)', 'Visibility(M)']])
     plt.show()
 
 
@@ -155,7 +155,7 @@ def boxPlots():
 
     # adiciona títulos e rótulos aos eixos
     plt.title('Distribuição da humidade')
-    plt.ylabel('Humidity')
+    plt.ylabel('Humidade')
 
     # exibe o boxplot
     plt.show()
@@ -221,7 +221,7 @@ def boxPlots():
 
     # adiciona títulos e rótulos aos eixos
     plt.title('Distribuição da Distancia dos Acidentes')
-    plt.ylabel('Distancia')
+    plt.ylabel('Distância')
 
     # exibe o boxplot
     plt.show()
@@ -237,25 +237,36 @@ def boxPlots():
     # exibe o boxplot
     plt.show()
 
-def transformacao_linear():
+def transformacao_linearDistancia():
     plt.plot(df1['Distance(mi)'])
-    plt.title('Sem transformação linear')
+    plt.title('Sem transformação linear(mi)')
     plt.xlim(0, 100)
     plt.figure()
     plt.plot(df1['Distance(M)'])
-    plt.title('Com transformação linear')
+    plt.title('Com transformação linear(M)')
     plt.xlim(0, 100)
     plt.show()
+
+def transformacao_linearTemperatura():
+        plt.plot(df1['Temperature(F)'])
+        plt.title('Sem transformação linear(F)')
+        plt.xlim(0, 100)
+        plt.figure()
+        plt.plot(df1['Temperature(C)'])
+        plt.title('Com transformação linear(C)')
+        plt.xlim(0, 100)
+        plt.show()
 
 #grafico_acidentes_estado()
 #histograma_acidentes_por_mes()
 #normalizacao()
-#transformacao_linear()
+#transformacao_linearDistancia()
 #boxPlots()
 #describe()
 #correlacoes()
-#dispersao_severidade_temperatura()
+#dispersao()
 #grafico_acidentes_timezone()
 #grafico_severidade_humidade()
 #garfico_Weather_Acidentes()
+#transformacao_linearTemperatura()
 
