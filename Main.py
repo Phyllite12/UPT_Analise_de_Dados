@@ -62,9 +62,9 @@ def grafico_acidentes_timezone():
 def grafico_nAcidentes_severidade():
     severity_humidity = df1.groupby('Severity')['Humidity(%)'].mean()
     severity_humidity.plot(kind="bar")
-    plt.title("Numero de acidentes por severidade")
+    plt.title("Severidade Por media de Humidade")
     plt.xlabel("Severidade")
-    plt.ylabel("NºAcidentes")
+    plt.ylabel("Humidade")
     severity_humidity.corr()
     plt.show()
 
