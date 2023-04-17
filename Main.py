@@ -49,30 +49,33 @@ def describe():
 
     print(df1.size)
 
-def filtros():
-    #Acidentes Por estado
-    countsAciSta = df1["State"].value_counts().head(10)
-    print("Numero de acidentes por estado")
-    print(countsAciSta)
-
-    print("")
-
+def grafico_acidentes_timezone():
     #Acidentes nas diferentes timezones
-    timezone_counts = df1['Timezone'].value_counts()
-    print("Numero de acidentes por time zone")
-    print(timezone_counts)
+    timezone_counts = df1['Timezone'].value_counts().head(4)
+    timezone_counts.plot(kind="bar")
+    plt.title("Numero de acidentes por time zone")
+    plt.xlabel("Timezone")
+    plt.ylabel("Count") 
 
-    print("")
+    plt.show()
 
+def grafico_severidade_humidade():
     severity_humidity = df1.groupby('Severity')['Humidity(%)'].mean()
-    print("Media de humidade para cada valor de severidade")
-    print(severity_humidity)
+    severity_humidity.plot(kind="bar")
+    plt.title("Numero de acidentes por time zone")
+    plt.xlabel("Severity")
+    plt.ylabel("Humedade") 
 
-    print("")
+    plt.show()
 
-    weather = df1['Weather_Condition'].value_counts().head(10)
-    print("Estados de tempo em que ocorrem mais acidentes")
-    print(weather)
+def garfico_Weather_Acidentes():
+    weather = df1['Weather_Condition'].value_counts().head(7)
+    weather.plot(kind="bar")
+    plt.title("Estados de tempo em que ocorrem mais acidentes")
+    plt.xlabel("Tempo")
+    plt.ylabel("Acidentes") 
+
+    plt.show()
 
 def grafico_acidentes_estado():
     countsAciSta = df1["State"].value_counts()
@@ -250,7 +253,9 @@ def transformacao_linear():
 #transformacao_linear()
 #boxPlots()
 #describe()
-#filtros()
 #correlacoes()
 #dispersao_severidade_temperatura()
+#grafico_acidentes_timezone()
+#grafico_severidade_humidade()
+#garfico_Weather_Acidentes()
 
