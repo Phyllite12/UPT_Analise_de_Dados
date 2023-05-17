@@ -64,7 +64,7 @@ def grafico_severidade_humidade():
     severity_humidity.plot(kind="bar")
     plt.title("Numero de acidentes por time zone")
     plt.xlabel("Severity")
-    plt.ylabel("Humedade") 
+    plt.ylabel("Time Zone") 
 
     plt.show()
 
