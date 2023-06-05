@@ -1,18 +1,19 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix
+from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
-# Carregar o conjunto de dados
+# Load the dataset
 df = pd.read_csv('US_Accidents_Dec21_updated.csv')
 
-# Preencher os valores NaN com zero no DataFrame original
+# Fill NaN values with 0 in the original DataFrame
 df.fillna(0, inplace=True)
 
-# Criar uma nova cópia do DataFrame
+# Create a new DataFrame
 df1 = pd.DataFrame(df)
 
-# Transformar dados categóricos em numéricos
+# Transform categorical data into numerical
 df1['Sunrise_Sunset'] = df1['Sunrise_Sunset'].map({'Day': 1, 'Night': 0})
 df1['Crossing'] = df1['Crossing'].map({True: 1, False: 0})
 df1['Traffic_Signal'] = df1['Traffic_Signal'].map({True: 1, False: 0})
@@ -27,42 +28,46 @@ df1['Station'] = df1['Station'].map({True: 1, False: 0})
 df1['Stop'] = df1['Stop'].map({True: 1, False: 0})
 df1['Traffic_Calming'] = df1['Traffic_Calming'].map({True: 1, False: 0})
 
-# Converter temperatura de Fahrenheit para Celsius
+# Convert temperature from Fahrenheit to Celsius
 df1['Temperature(C)'] = (df1['Temperature(F)'] - 32) * 5/9
 
-# Converter distância de milhas para metros
+# Convert distance from miles to meters
 df1['Distance(M)'] = df1['Distance(mi)'] * 1609.34
 
-# Converter dados de tempo para formato datetime
+# Convert time data to datetime
 df1['Start_Time'] = pd.to_datetime(df1['Start_Time'])
 df1['End_Time'] = pd.to_datetime(df1['End_Time'])
-# Calcular a diferença entre o tempo de início e término do acidente
+# Calculate the difference between start and end time of the accident
 df1['Accident_Duration'] = (df1['End_Time'] - df1['Start_Time']).dt.total_seconds().astype(int)
 
-# Definir os dados de entrada e saída
+# Define input and output data
 dfInput = ['Distance(M)', 'Temperature(C)', 'Wind_Chill(F)', 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Speed(mph)', 'Precipitation(in)', 'Amenity', 'Bump', 'Crossing', 'Give_Way', 'Junction', 'No_Exit', 'Railway', 'Roundabout', 'Station', 'Stop', 'Traffic_Calming', 'Traffic_Signal', 'Sunrise_Sunset']
 dfOutput = df1['Severity']
 
-# Preencher valores NaN nas colunas de entrada especificadas com zero
+# Fill NaN values with 0 in the specified input features
 df1[dfInput] = df1[dfInput].fillna(0)
 
-# Dividir os dados em conjuntos de treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(df1[dfInput], dfOutput, test_size=0.3, random_state=109)
+X, y = df1[dfInput], dfOutput
 
-# Criar o classificador RandomForestClassifier
-rf = RandomForestClassifier(max_depth=10, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-# Treinar o modelo usando os conjuntos de treinamento
-clf = rf.fit(X_train, y_train)
+# Scale the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-# Prever a resposta para o conjunto de teste
-y_pred = clf.predict(X_test)
+# Apply PCA on the scaled features
+pca = PCA(n_components=10)  # Specify the desired number of components
+X_train_pca = pca.fit_transform(X_train_scaled)
+X_test_pca = pca.transform(X_test_scaled)
 
-# Calcular e imprimir a precisão do modelo
-accuracy = clf.score(X_test, y_test)
-print("Accuracy: {:.2f}".format(accuracy))
+# Create and train the logistic regression model on the transformed data
+clf = LogisticRegression(random_state=0, max_iter=100000)
+clf.fit(X_train_pca, y_train)
 
-# Calcular e imprimir a matriz de confusão
-cm = confusion_matrix(y_test, y_pred)
-print("Confusion Matrix:")
-print(cm)
+# Predict the classes on the test set using the transformed data
+y_pred = clf.predict(X_test_pca)
+
+# Calculate the model accuracy
+accuracy = clf.score(X_test_pca, y_test)
+print("Accuracy:", accuracy)
