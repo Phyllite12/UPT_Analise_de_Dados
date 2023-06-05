@@ -64,16 +64,5 @@ y_pred = adaboost.predict(X_test)
 
 # Calcular a precisão do modelo
 accuracy = adaboost.score(X_test, y_test)
-print("Accuracy:", accuracy)
+print("Precisão:", accuracy)
 
-# Plotar a matriz de confusão
-confusion_matrix = pd.crosstab(y_test, y_pred, rownames=['True'], colnames=['Predicted'])
-plt.figure(figsize=(10, 8))
-plt.title('Confusion Matrix')
-plt.xlabel('Predicted')
-plt.ylabel('True')
-plt.imshow(confusion_matrix, cmap='Blues')
-plt.xticks(ticks=[0, 1, 2, 3], labels=['1', '2', '3', '4'])
-plt.yticks(ticks=[0, 1, 2, 3], labels=['1', '2', '3', '4'])
-plt.colorbar()
-plt.show()
