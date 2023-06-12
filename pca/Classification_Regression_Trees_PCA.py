@@ -5,7 +5,7 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 # Carregar o conjunto de dados
-df = pd.read_csv('US_Accidents_Dec21_updated.csv')
+df = pd.read_csv('C:\\Users\\marco\\Documents\\VsCode\python\\Traballho\\Analise_de_Dados\\US_Accidents_Dec21_updated.csv')
 
 # Preencher os valores NaN com zero no DataFrame original
 df.fillna(0, inplace=True)

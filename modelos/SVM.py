@@ -49,7 +49,7 @@ dfOutput = df1['Severity']
 df1[dfInput] = df1[dfInput].fillna(0)
 
 # Dividir os dados em conjuntos de treinamento e teste
-X_train, X_test, y_train, y_test = train_test_split(df1[dfInput], dfOutput, test_size=0.3, random_state=109)
+X_train, X_test, y_train, y_test = train_test_split(df1[dfInput], dfOutput, test_size=0.3, random_state=10)
 
 # Imprimir os nomes das 13 características (X)
 print("Features: ", dfInput)
