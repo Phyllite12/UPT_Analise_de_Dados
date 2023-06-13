@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 def predict_severity(dfInput_values):
-    df = pd.read_csv('C:\\Users\\marco\\Documents\\VsCode\python\\Traballho\\Analise_de_Dados\\US_Accidents_Dec21_updated.csv')
+    df = pd.read_csv('US_Accidents_Dec21_updated.csv')
     df.fillna(0, inplace=True)
 
     df1 = pd.DataFrame(df)
