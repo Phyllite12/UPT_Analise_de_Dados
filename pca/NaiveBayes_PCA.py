@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-df = pd.read_csv('C:\\Users\\marco\\Documents\\VsCode\python\\Traballho\\Analise_de_Dados\\US_Accidents_Dec21_updated.csv')
+df = pd.read_csv('US_Accidents_Dec21_updated.csv')
 
 # Fill NaN values with zero in the original DataFrame
 df.fillna(0, inplace=True)
